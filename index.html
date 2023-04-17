@@ -257,7 +257,7 @@
       </aside>
     </main>
   </div>
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
 
   <script id="article-link" type="text/x-handlebars-template">
@@ -281,17 +281,20 @@
 
 
 
-  <script id="sidebar-tag-link" type="text/x-handlebars-template">
-    <a href="#tag-{{ tag }} " class= "{{ name }}" > {{ tag }}  ( {{ number }} )</a> 
-   
-  <!-- </script>
+  <script id="sidebar-tag-cloud" type="text/x-handlebars-template">
+    
+  {{#each tags}}
+  <a href="#tag-{{ tag }}" class= "{{ className }}" > {{ tag }}  ( {{ count }} )</a> 
+  {{/each}}
+
+   </script>
 
 
 
-  <script id="sidebar-author-link" type="text/x-handlebars-template">
+  <!-- <script id="sidebar-author-link" type="text/x-handlebars-template">
    -->
    
-  </script>
+  <!-- </script> -->
   <script src="js/script.js"></script>
   <script src="js/script2.js"></script>
 </body>

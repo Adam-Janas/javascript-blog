@@ -1,10 +1,10 @@
-// const { active } = require("browser-sync");
+/*global Handlebars*/
 const templates = {
   articleLink: Handlebars.compile(document.querySelector('#article-link').innerHTML),
   tagLink: Handlebars.compile(document.querySelector('#tag-link').innerHTML),
   authorLink: Handlebars.compile(document.querySelector('#author-link').innerHTML),
-  sidebarTagLink: Handlebars.compile(document.querySelector('#sidebar-tag-link').innerHTML),
-}
+  sidebarTagCloud: Handlebars.compile(document.querySelector('#sidebar-tag-cloud').innerHTML),
+};
 const titleClickHandler = function(event){
   event.preventDefault();
   const clickedElement = this;
@@ -146,18 +146,23 @@ function generateTags(){
   }
   const tagsParams = calculateTagsParams(allTags);
   console.log('tagsParams:', tagsParams);
-  let allTagsHTML = '';
+  const allTagsData = {tags: []};
   /* [NEW] START LOOP: for each tag in allTags: */
   for(let tag in allTags){
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    allTagsHTML += '<a href="#tag-'+ tag + '" class= "'+calculateTagClass(allTags[tag], tagsParams)+'" >' + tag + ' (' + allTags[tag] + ')</a> '; 
+    // allTagsHTML += '<a href="#tag-'+ tag + '" class= "'+calculateTagClass(allTags[tag], tagsParams)+'" >' + tag + ' (' + allTags[tag] + ')</a> '; 
+    allTagsData.tags.push({
+      tag: tag,
+      count: allTags[tag],
+      className: calculateTagClass(allTags[tag], tagsParams)
+    });
   }
   /* [NEW] END LOOP: for each tag in allTags: */
   /* [NEW] find list of tags in right column */
   const tagList = document.querySelector(optTagsListSelector);
 
   /* [NEW] add html from allTags to tagList */
-  tagList.innerHTML = allTagsHTML;
+  tagList.innerHTML = templates.sidebarTagCloud(allTagsData);
   console.log(allTags);
 }
 
